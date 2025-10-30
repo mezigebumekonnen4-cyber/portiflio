@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Image Slider</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Styles for Slider */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            background-color: #1f2937;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: opacity 0.5s ease-in-out; /* Smooth transition */
+            object-fit: cover; /* Ensure image covers the area */
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.75rem 0.5rem;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+            opacity: 0.7;
+            transition: opacity 0.2s, background 0.2s;
+        }
+
+        .nav-btn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        #prev-btn {
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            left: 0;
+        }
+
+        #next-btn {
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            right: 0;
+        }
+
+        /* Dot Indicator Styling */
+        .dot {
+            height: 12px;
+            width: 12px;
+            margin: 0 5px;
+            background-color: #4b5563;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #f59e0b; /* Orange active dot */
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+    <!-- Image Display Area -->
+    <div id="slide-show-container" class="w-full aspect-video">
+        <img id="current-image" class="slide-image" src="" alt="Placeholder Image Slider">
+    </div>
+
+    <!-- Navigation Buttons -->
+    <button id="prev-btn" class="nav-btn">&#10094;</button> <!-- Left Arrow -->
+    <button id="next-btn" class="nav-btn">&#10095;</button> <!-- Right Arrow -->
+
+    <!-- Dot Indicators -->
+    <div id="dot-container" class="flex justify-center py-4 bg-gray-800">
+        <!-- Dots will be generated here by JavaScript -->
+    </div>
+</div>
+
+<script>
+    // List of image data (URL and descriptive alt text)
+    const slides = [
+        { url: "https://placehold.co/1200x600/10b981/ffffff?text=Image+1+-+City+View", alt: "Modern city skyline at sunset" },
+        { url: "https://placehold.co/1200x600/f59e0b/ffffff?text=Image+2+-+Mountain+Scenery", alt: "Vibrant mountain landscape with a lake" },
+        { url: "https://placehold.co/1200x600/3b82f6/ffffff?text=Image+3+-+Tech+Abstract", alt: "Abstract blue and purple technology background" },
+        { url: "https://placehold.co/1200x600/ef4444/ffffff?text=Image+4+-+Desert+Road", alt: "Long desert road stretching into the horizon" }
+    ];
+
+    // State
+    let currentSlideIndex = 0;
+    
+    // DOM Elements
+    const currentImage = document.getElementById('current-image');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const dotContainer = document.getElementById('dot-container');
+
+    /**
+     * Updates the slider to show a specific slide index.
+     * @param {number} index - The index of the slide to show.
+     */
+    function showSlide(index) {
+        // Handle wrapping around the array
+        if (index >= slides.length) {
+            currentSlideIndex = 0;
+        } else if (index < 0) {
+            currentSlideIndex = slides.length - 1;
+        } else {
+            currentSlideIndex = index;
+        }
+
+        // Get the slide data
+        const slide = slides[currentSlideIndex];
+
+        // Update the image source and alt text
+        currentImage.src = slide.url;
+        currentImage.alt = slide.alt;
+        
+        // Update the dot indicators
+        updateDots();
+    }
+
+    /**
+     * Moves to the next slide.
+     */
+    function nextSlide() {
+        showSlide(currentSlideIndex + 1);
+    }
+
+    /**
+     * Moves to the previous slide.
+     */
+    function prevSlide() {
+        showSlide(currentSlideIndex - 1);
+    }
+
+    /**
+     * Creates and updates the navigation dots.
+     */
+    function updateDots() {
+        // Clear existing dots
+        dotContainer.innerHTML = ''; 
+
+        slides.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            
+            // Add 'active' class to the current dot
+            if (index === currentSlideIndex) {
+                dot.classList.add('active');
+            }
+
+            // Add click listener to jump to that slide
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+            
+            dotContainer.appendChild(dot);
+        });
+    }
+
+    // --- Event Listeners ---
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Initialize the slider when the page loads
+    window.onload = () => {
+        showSlide(0); // Start with the first slide
+        // Optional: Auto-play the slider every 5 seconds
+        setInterval(nextSlide, 5000); 
+    };
+
+</script>
+</body>
+</html>

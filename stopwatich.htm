@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Stopwatch</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* Dark background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .stopwatch-container {
+            width: 100%;
+            max-width: 500px;
+            background: #1f2937;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .time-display {
+            font-size: 3.5rem; /* Larger font for time */
+            font-weight: 200; /* Light weight for a sleek digital look */
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            line-height: 1; /* Prevent excessive line spacing */
+            /* Responsive Font Size */
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+        }
+
+        .lap-list-container {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 1.5rem;
+            padding: 0 0.5rem;
+            background-color: #111827;
+            border-radius: 0.5rem;
+        }
+        
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #374151;
+            color: #d1d5db;
+        }
+
+        .lap-item:last-child {
+            border-bottom: none;
+        }
+        
+        .lap-number {
+            font-weight: 600;
+            color: #9ca3af;
+        }
+
+        .lap-time {
+            font-family: monospace; /* Monospace for precise timing alignment */
+            font-weight: 400;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 50px; /* Pill shape */
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            margin: 0 0.5rem;
+            min-width: 110px;
+        }
+
+        .btn-start {
+            background-color: #10b981; /* Green */
+            color: #111827;
+        }
+        .btn-start:hover {
+            background-color: #059669;
+        }
+
+        .btn-pause {
+            background-color: #f59e0b; /* Orange */
+            color: #111827;
+        }
+        .btn-pause:hover {
+            background-color: #d97706;
+        }
+
+        .btn-reset, .btn-lap {
+            background-color: #374151; /* Gray */
+            color: #ffffff;
+        }
+        .btn-reset:hover, .btn-lap:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+<div class="stopwatch-container">
+    <h1 class="text-3xl font-bold text-white mb-6">Stopwatch</h1>
+    
+    <!-- Time Display -->
+    <div id="time-display" class="time-display text-emerald-400">00:00:00.00</div>
+    
+    <!-- Control Buttons -->
+    <div class="flex justify-center space-x-4">
+        <button id="reset-btn" class="btn btn-reset" disabled>Reset</button>
+        <button id="start-pause-btn" class="btn btn-start">Start</button>
+        <button id="lap-btn" class="btn btn-lap" disabled>Lap</button>
+    </div>
+
+    <!-- Lap Times Display -->
+    <div id="lap-list-container" class="lap-list-container hidden">
+        <ul id="lap-list" class="text-left">
+            <!-- Lap items will be inserted here -->
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // DOM Elements
+        const timeDisplay = document.getElementById('time-display');
+        const startPauseBtn = document.getElementById('start-pause-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const lapBtn = document.getElementById('lap-btn');
+        const lapList = document.getElementById('lap-list');
+        const lapListContainer = document.getElementById('lap-list-container');
+
+        // State Variables
+        let milliseconds = 0;
+        let timerInterval;
+        let isRunning = false;
+        let lapCount = 0;
+        let lastLapTime = 0; // Time of the previous lap (for calculating segment time)
+
+        /**
+         * Formats the time in milliseconds into HH:MM:SS.CS (Hours:Minutes:Seconds.Centiseconds)
+         * @param {number} ms - The total time in milliseconds.
+         * @returns {string} The formatted time string.
+         */
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            // Centiseconds (hundredths of a second)
+            const cs = Math.floor((ms % 1000) / 10); 
+
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            // Helper to pad numbers with leading zero
+            const pad = (num) => num.toString().padStart(2, '0');
+
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(cs)}`;
+        }
+
+        /**
+         * Updates the time display every 10 milliseconds.
+         */
+        function updateTime() {
+            milliseconds += 10;
+            timeDisplay.textContent = formatTime(milliseconds);
+        }
+
+        /**
+         * Toggles the stopwatch between running and paused states.
+         */
+        function startPause() {
+            if (isRunning) {
+                // PAUSE logic
+                clearInterval(timerInterval);
+                isRunning = false;
+                startPauseBtn.textContent = 'Start';
+                startPauseBtn.classList.remove('btn-pause');
+                startPauseBtn.classList.add('btn-start');
+                
+                // Enable Reset button when paused
+                resetBtn.disabled = false;
+                // Disable Lap button when paused
+                lapBtn.disabled = true;
+            } else {
+                // START logic
+                // Update every 10ms for centisecond precision
+                timerInterval = setInterval(updateTime, 10); 
+                isRunning = true;
+                startPauseBtn.textContent = 'Pause';
+                startPauseBtn.classList.remove('btn-start');
+                startPauseBtn.classList.add('btn-pause');
+
+                // Enable Reset button only when running (to allow immediate lap)
+                resetBtn.disabled = true;
+                // Enable Lap button when running
+                lapBtn.disabled = false;
+            }
+        }
+
+        /**
+         * Resets the stopwatch to zero and clears laps.
+         */
+        function reset() {
+            clearInterval(timerInterval);
+            milliseconds = 0;
+            isRunning = false;
+            lapCount = 0;
+            lastLapTime = 0;
+            
+            timeDisplay.textContent = '00:00:00.00';
+            startPauseBtn.textContent = 'Start';
+            startPauseBtn.classList.remove('btn-pause');
+            startPauseBtn.classList.add('btn-start');
+            
+            // Clear lap list and hide container
+            lapList.innerHTML = '';
+            lapListContainer.classList.add('hidden');
+
+            // Disable Reset and Lap buttons after full reset
+            resetBtn.disabled = true;
+            lapBtn.disabled = true;
+        }
+
+        /**
+         * Records the current lap time.
+         */
+        function recordLap() {
+            if (!isRunning) return; // Only allow laps when running
+
+            lapCount++;
+            lapListContainer.classList.remove('hidden');
+
+            // Total time since last lap (segment time)
+            const segmentTime = milliseconds - lastLapTime;
+            const segmentTimeFormatted = formatTime(segmentTime);
+
+            // Total elapsed time
+            const totalTimeFormatted = formatTime(milliseconds);
+
+            // Create list item for the lap
+            const listItem = document.createElement('li');
+            listItem.classList.add('lap-item');
+            
+            // Note: Laps are typically displayed in reverse chronological order (newest on top)
+            listItem.innerHTML = `
+                <span class="lap-number">LAP ${lapCount}</span>
+                <span class="lap-time text-yellow-300">(${segmentTimeFormatted})</span>
+                <span class="lap-time">${totalTimeFormatted}</span>
+            `;
+
+            // Insert at the beginning of the list
+            lapList.insertBefore(listItem, lapList.firstChild);
+
+            // Update the last lap time
+            lastLapTime = milliseconds;
+        }
+
+        // --- Event Listeners ---
+        startPauseBtn.addEventListener('click', startPause);
+        resetBtn.addEventListener('click', reset);
+        lapBtn.addEventListener('click', recordLap);
+
+        // Initial setup for buttons
+        // The reset button is only active when the timer is paused but not fully reset.
+        // We set it to disabled initially, and enable it in startPause() when it stops.
+        resetBtn.disabled = true; 
+        lapBtn.disabled = true;
+    });
+</script>
+</body>
+</html>

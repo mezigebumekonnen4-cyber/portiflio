@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezigebu Mekonnen - Interactive Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="text-gray-800">
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-[#2c3e50] tracking-wider">
+                Mezigebu
+            </div>
+            <ul class="flex space-x-6 md:space-x-8 font-medium">
+                <li><a href="#home" class="text-gray-700 hover:text-[#3498db] transition duration-300">Home</a></li>
+                <li><a href="#about" class="text-gray-700 hover:text-[#3498db] transition duration-300">About</a></li>
+                <li><a href="#skills" class="text-gray-700 hover:text-[#3498db] transition duration-300">Skills</a></li>
+                <li><a href="#projects" class="text-gray-700 hover:text-[#3498db] transition duration-300">Projects</a>
+                </li>
+                <li><a href="#contact" class="text-gray-700 hover:text-[#3498db] transition duration-300">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="Portfolio-img">
+        <img src="m.jpg" alt="Profile Image" style="width:150px;height: 150px;border-radius: 50px;margin-top: -70px;"  class="Profile-img"/>
+    </div>
+
+    <section id="home">
+        <h1>Hi, I'm mezigebu</h1>
+        <h2 id="typing"></h2>
+        <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button>
+    </section>
+
+    <main>
+        <section id="home"
+            class="animated-bg min-h-screen flex items-center justify-center text-center text-white pt-20">
+            <div class="p-8 max-w-4xl mx-auto fade-in-on-scroll">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight">
+                    Hello, I'm Mezigebu Mekonnen
+                </h1>
+                <p class="text-2xl md:text-3xl font-light mb-8">
+                    I am a <span class="animated-text-container"><span class="animated-text font-bold"></span></span>
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <button onclick="showMessage('Download CV functionality initiated!')"
+                        class="bg-[#3498db] hover:bg-[#2980b9] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 interactive-button">
+                        Download CV
+                    </button>
+                    <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })"
+                        class="bg-transparent border-2 border-white hover:bg-white hover:text-[#2c3e50] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 interactive-button">
+                        Hire Me
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 md:py-32 px-4 bg-white">
+            <div class="max-w-4xl mx-auto fade-in-on-scroll">
+                <h2 class="text-4xl font-bold text-center text-[#2c3e50] mb-12">About Me: A Dedicated Coder 🧑‍💻</h2>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-2xl border-l-4 border-[#3498db]">
+                    <p class="text-lg leading-relaxed mb-4 text-gray-700">
+                        I am **Mezigebu Mekonnen**, a diligent Computer Science student at the **University of Gondar**.
+                        My journey in CS has been driven by an insatiable curiosity and a commitment to continuous
+                        learning. I view coding not just as a task, but as a craft, striving always for clarity,
+                        efficiency, and robust architecture in my projects.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-4 text-gray-700">
+                        As a coder, I excel in understanding complex algorithms and translating them into practical,
+                        scalable solutions. My academic foundation is solid, and I actively apply theoretical knowledge
+                        to real-world development challenges, particularly in web technologies and backend systems. I am
+                        passionate about solving problems and collaborating on high-impact technical initiatives.
+                    </p>
+                    <p class="text-lg font-semibold text-[#3498db]">
+                        My goal is to evolve into a full-stack engineer who can bridge the gap between user experience
+                        and system performance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 md:py-32 px-4 bg-gray-100">
+            <div class="max-w-4xl mx-auto fade-in-on-scroll">
+                <h2 class="text-4xl font-bold text-center text-[#2c3e50] mb-12">Technical Skills & Proficiency 📊</h2>
+
+                <div class="space-y-6">
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">HTML</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="95">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="95%" data-color="#e34c26"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">CSS</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="90">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="90%" data-color="#2965f1"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">JavaScript</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="85">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="85%" data-color="#f0db4f"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">Python</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="80">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="80%" data-color="#3572A5"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">Algorithm (Data Structures)</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="75">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="75%" data-color="#1abc9c"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">Database (SQL)</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="70">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="70%" data-color="#f39c12"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">Java</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="65">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="65%" data-color="#e74c3c"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-semibold text-lg">C++ (CPP) & Networking</span>
+                            <span class="text-sm font-bold text-[#3498db]" data-percent="60">0%</span>
+                        </div>
+                        <div class="skill-bar-outer">
+                            <div class="skill-level" data-level="60%" data-color="#9b59b6"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section id="projects" class="py-20 md:py-32 px-4 bg-white">
+            <div class="max-w-6xl mx-auto fade-in-on-scroll">
+                <h2 class="text-4xl font-bold text-center text-[#2c3e50] mb-12">Featured Projects 🚀</h2>
+                <p class="text-center text-gray-600 mb-8">These projects showcase my ability to build functional,
+                    interactive web applications.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div
+                        class="project-card p-6 bg-gray-50 rounded-xl shadow-lg border border-gray-200 transition duration-300">
+                        <h3 class="text-2xl font-bold text-[#3498db] mb-3">Calculator App</h3>
+                        <p class="text-gray-700 mb-4">A fully functional, responsive calculator built using HTML, CSS,
+                            and pure JavaScript logic.</p>
+                        <button onclick="showMessage('This is the placeholder for the Calculator project!')"
+                            class="w-full bg-[#2c3e50] text-white py-2 rounded-lg hover:bg-[#34495e] transition duration-300">
+                           <a href="calculator.html">View Project Code</a> 
+                        </button>
+                    </div>
+
+                    <div
+                        class="project-card p-6 bg-gray-50 rounded-xl shadow-lg border border-gray-200 transition duration-300">
+                        <h3 class="text-2xl font-bold text-[#3498db] mb-3">Image Slider</h3>
+                        <p class="text-gray-700 mb-4">An interactive, auto-playing image carousel with navigation controls, built for smooth UX.</p>
+                        <button onclick="showMessage('This is the placeholder for the Image Slider project!')"
+                            class="w-full bg-[#2c3e50] text-white py-2 rounded-lg hover:bg-[#34495e] transition duration-300">
+                        <a href="imageslider.html">View Project Code</a>
+                        </button>
+                    </div>
+
+                    <div
+                        class="project-card p-6 bg-gray-50 rounded-xl shadow-lg border border-gray-200 transition duration-300">
+                        <h3 class="text-2xl font-bold text-[#3498db] mb-3">Stopwatch</h3>
+                        <p class="text-gray-700 mb-4">A precise digital stopwatch application with lap functionality,
+                            demonstrating DOM manipulation.</p>
+                        <button
+                            onclick="showMessage('This is the placeholder for the Stopwatch project! Immersive coming soon.')"
+                            class="w-full bg-[#2c3e50] text-white py-2 rounded-lg hover:bg-[#34495e] transition duration-300">
+                         
+                         <a href="stopwatich.htm">View Project Code</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 md:py-32 px-4 animated-bg text-white">
+            <div class="max-w-4xl mx-auto text-center fade-in-on-scroll">
+                <h2 class="text-4xl font-bold mb-12">Let's Connect! 👋</h2>
+
+                <div class="space-y-4 mb-10 text-xl">
+                    <p class="font-semibold">Name: <span class="text-[#3498db]">Mezigebu Mekonnen</span></p>
+                    <p class="font-semibold">Phone: <span class="text-[#3498db]">0931073606</span></p>
+                </div>
+
+                <div class="flex justify-center space-x-8">
+                    <a href="https://www.facebook.com/yourusername" target="_blank" aria-label="Facebook"
+                        class="text-4xl text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/yourusername" target="_blank" aria-label="Instagram"
+                        class="text-4xl text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn"
+                        class="text-4xl text-white transition duration-300 transform hover:scale-110">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <p class="mt-8 text-sm opacity-80">
+                    Replace 'yourusername' with your actual social media handles.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#2c3e50] text-white text-center py-4 text-sm">
+        &copy; 2025 Mezigebu Mekonnen. Built with passion and code.
+    </footer>
+
+    <div id="custom-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[1001]">
+        <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full text-center">
+            <p id="modal-message" class="text-lg font-medium mb-4 text-gray-800"></p>
+            <button onclick="document.getElementById('custom-modal').classList.add('hidden');"
+                class="bg-[#3498db] text-white py-2 px-6 rounded-full hover:bg-[#2980b9] transition duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
